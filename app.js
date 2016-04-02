@@ -3,7 +3,8 @@ const   express = require('express'),
 	https = require('https');
 
 var     app = express(),
-	port = 443;
+	port = 443,
+	MongoClient = require('mongodb').MongoClient;
 
 var certOptions = {
 	ca: fs.readFileSync('../pebble-localize_win.ca-bundle'),
@@ -13,8 +14,16 @@ var certOptions = {
 
 var server = https.createServer(certOptions, app).listen(port, () => {
 	console.log("Server started");
-})
+});
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
+app.get('/', function(req, res) {
+	MongoClient.connect('mongodb://localhost:27017/localizeDB', function(err, db) {
+		if (err) throw err;
+	
+		db.collection('users').insertOne({'joo': 'gui'}, function(errInsert, result) {
+			if (errInsert) throw errInsert;
+
+			res.send('Hello World');
+		});
+	});
 });
