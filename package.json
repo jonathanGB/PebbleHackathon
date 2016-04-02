@@ -1,0 +1,8 @@
+{
+	"name": "pebble-localize-backend",
+	"version": "0.0.1",
+	"licence": "MIT",
+	"dependencies": {
+		"express": "~4.13.x"
+	}
+}
