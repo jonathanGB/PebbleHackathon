@@ -1,0 +1,5 @@
+POST /user/join : add new user to database
+	500: Error connecting or querying database
+	400: bad/incomplete input
+	403: username already in database
+	200: OK -> returns _id of user
