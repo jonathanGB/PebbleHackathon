@@ -4,6 +4,7 @@
 	"licence": "MIT",
 	"dependencies": {
 		"express": "~4.13.x",
-		"mongodb": "~2.1.x"
+		"mongodb": "~2.1.x",
+		"socket.io": "~1.4.x"
 	}
 }
