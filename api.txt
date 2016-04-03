@@ -1,4 +1,4 @@
-POST /user/join : add new user to database
+POST /user/create : add new user to database
 	Parameters:
 		name: name of the person
 		username
@@ -9,3 +9,89 @@ POST /user/join : add new user to database
 		400: bad/incomplete input
 		403: username already in database
 		200: OK -> returns _id of user
+
+
+POST /group/create : add new group to database
+	Parameters:
+		masterId: _id of user creating the group
+		groupName
+		destLat: latitude of destination
+		destLng: longitude of destination
+
+	Response:
+		500: Error connecting or querying database
+		400: bad/incomplete input
+		404: masterId not in database
+		403: masterId already has a group
+		200: OK -> returns _id of group
+
+
+PATCH /group/join : user wants to join a group
+	Parameters:
+		userId: _id of the user
+		groupId: _id of the group
+
+	Response:
+		500: Error connecting or querying database
+		400: bad/incomplete input
+		403: user already is in a group
+		404: user and/or group not in database
+		200: OK -> returns _id of group
+
+
+DELETE /group/leave : user wants to leave group
+	Parameters:
+		userId: _id of the user
+
+	Response:
+		500: Error connecting or querying database
+		400: bad/incomplete input
+		404: user not in database
+		403: user has no group
+		200: OK
+
+DELETE /user/leave : user wants to delete account
+	Parameters:
+		userId: _id of the user
+
+	Response:
+		500: Error connecting or querying database
+		400: bad/incomplete input
+		404: user not in database
+		200: OK
+
+PATCH /user/changePword : change user password
+	Parameters:
+		userId: _id of the user
+		oPword: old password
+		nPword: new password
+
+	Response:
+		500: Error connecting or querying database
+		400: bad/incomplete input
+		404: user not in database
+		403: old password does not match
+		200: OK
+
+
+GET /allUsersInfo : get all users' info
+	Parameters:
+		inputName: username or name of users to search for
+
+	Response:
+		500: Error connecting or querying database
+		400: bad/incomplete input
+		404: no result in database
+		200: OK -> [{username, name}, ...]
+
+
+GET /usersInfo/:from/:to : get users' info in range [:from, :to]
+	Parameters:
+		inputName: username or name of users to search for
+
+	Response:
+		500: Error connecting or querying database
+		400: bad/incomplete input
+		403: :from and/or :to are invalid (not in increasing order or Numbers)
+		404: no result in database
+		200: OK -> [{username, name}, ...]
