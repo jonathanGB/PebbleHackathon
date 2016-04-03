@@ -23,7 +23,7 @@ POST /group/create : add new group to database
 		400: bad/incomplete input
 		404: masterId not in database
 		403: masterId already has a group
-		200: OK -> returns _id of group
+		200: OK
 
 
 PATCH /group/join : user wants to join a group
