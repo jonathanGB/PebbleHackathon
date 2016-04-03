@@ -46,6 +46,7 @@ DELETE /group/leave : user wants to leave group
 	Response:
 		500: Error connecting or querying database
 		400: bad/incomplete input
+		405: master can't leave non-empty group
 		404: user not in database
 		403: user has no group
 		200: OK
