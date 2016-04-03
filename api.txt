@@ -36,7 +36,7 @@ PATCH /group/join : user wants to join a group
 		400: bad/incomplete input
 		403: user already is in a group
 		404: user and/or group not in database
-		200: OK -> returns _id of group
+		200: OK -> returns {destLat, destLng}
 
 
 DELETE /group/leave : user wants to leave group
