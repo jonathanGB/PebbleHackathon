@@ -1,10 +1,11 @@
 {
-	"name": "pebble-localize-backend",
-	"version": "0.0.1",
-	"licence": "MIT",
-	"dependencies": {
-		"express": "~4.13.x",
-		"mongodb": "~2.1.x",
-		"socket.io": "~1.4.x"
-	}
+  "name": "pebble-localize-backend",
+  "version": "0.0.1",
+  "licence": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "~4.13.x",
+    "mongodb": "~2.1.x",
+    "socket.io": "~1.4.x"
+  }
 }
