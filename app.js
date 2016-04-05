@@ -7,7 +7,8 @@ const   express = require('express'),
 var     app = express(),
 	port = 443,
 	MongoClient = mongodb.MongoClient,
-	dbUrl = 'mongodb://localhost:27017/localizeDB';
+	dbUrl = 'mongodb://localhost:27017/localizeDB',
+	bcrypt = require('bcrypt');
 
 app.use(bodyParser.urlencoded({
 	extended: true
@@ -48,7 +49,7 @@ MongoClient.connect(dbUrl, function(err, db) {
 		else {
 			var name = sanitizeInput(req.body.name),
 				username = sanitizeInput(req.body.username),
-				pword = sanitizeInput(req.body.pword);
+				pword = req.body.pword;
 					
 			if (!name || !username || !pword)
 				res.status(400).send(parseResponse('Bad input'));
@@ -61,11 +62,23 @@ MongoClient.connect(dbUrl, function(err, db) {
 					else if (resultFind)
 						res.status(403).send(parseResponse('Username already exists'));
 					else {
-						db.collection('users').insertOne({'username': username, 'name': name, 'pword': pword}, function(errInsert, result) {
-							if (errInsert)
-								res.status(500).send(parseResponse('Error creating user'));
-							else
-								res.status(200).send(parseResponse(result.insertedId));
+						bcrypt.genSalt(10, function(errSalt, salt) {
+							if (errSalt)
+								res.status(500).send(parseResponse('Error processing'));
+							else {
+								bcrypt.hash(pword, salt, function(errHash, hash) {
+									if (errHash)
+										res.status(500).send(parseResponse('ErrorError processing'));
+									else {
+										db.collection('users').insertOne({'username': username, 'name': name, 'pword': hash}, function(errInsert, result) {
+											if (errInsert)
+												res.status(500).send(parseResponse('Error creating user'));
+											else
+												res.status(200).send(parseResponse(result.insertedId));
+										});
+									}
+								});
+							}
 						});
 					}
 				});
